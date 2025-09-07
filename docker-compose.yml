@@ -31,6 +31,8 @@ services:
     # postgre_sqlが立ち上がらないため追加
     env_file:
     - .env
+    environment:
+    - DJANGO_SETTINGS_MODULE=config.settings.local
 
 volumes:
   db-data:
