@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 from products.views import ProductListView, manage_product
 
 urlpatterns = [
-    path('', ProductListView, name='home'),
+    path('', ProductListView.as_view(),name='home'),
     path('admin/', admin.site.urls),
     path('hello/', TemplateView.as_view(template_name='hello.html')),
     path('products/', include('products.urls')),
