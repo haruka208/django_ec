@@ -19,9 +19,10 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
-from products.views import manage_product
+from products.views import ProductListView, manage_product
 
 urlpatterns = [
+    path('', ProductListView, name='home'),
     path('admin/', admin.site.urls),
     path('hello/', TemplateView.as_view(template_name='hello.html')),
     path('products/', include('products.urls')),
