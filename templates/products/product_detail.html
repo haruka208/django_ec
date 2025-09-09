@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/product_custom.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">{{ product.sku }}</div>
+                <h1 class="display-5 fw-bolder">{{ product.name}}</h1>
+                <div class="fs-5 mb-5">
+                    <span class="">{{ product.price }}円</span>
+                </div>
+                <p class="lead">{{ product.description }}</p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi-cart-fill me-1"></i>
+                        カートに追加する
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">新着商品</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in related_products %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <a href="{% url 'products:product_detail' product.id %}">
+                    <img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    </a>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Product price-->
+                            {{ product.price }}円
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
