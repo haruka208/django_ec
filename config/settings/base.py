@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'cloudinary',
-    'cloudinary_storage'
+    'cloudinary_storage',
+    'management',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,5 @@ CLOUDINARY_STORAGE = {
     'API_KEY': env('CLOUDINARY_API_KEY'),
     'API_SECRET': env('CLOUDINARY_API_SECRET')
 }
+
+BASICAUTH_USERS={"admin": "pw"} # Basic認証用

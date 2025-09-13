@@ -1,0 +1,17 @@
+{% extends 'management/products/manage_products_base.html' %}
+
+{% block content %}
+<div class="container w-75">
+  <div class="d-flex justify-content-end mt-4 mb-3">
+    <a href="{% url 'management:manage_products' %}" class="btn btn-outline-dark me-2">商品一覧へ</a>
+    <!-- <button type="button" class="btn btn-secondary me-2">ログアウト</button> -->
+  </div>
+  <div class="container mt-5">
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="d-flex justify-content-center"><button type="submit" class="btn btn-outline-primary me-2">商品登録する</button></div>
+    </form>
+  </div>
+</div>
+{% endblock %}

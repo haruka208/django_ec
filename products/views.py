@@ -3,8 +3,6 @@ from django.views.generic.detail import DetailView
 from .models import Product
 # from django.http import HttpResponse
 
-from django.shortcuts import render
-
 # Create your views here.
 class ProductListView(ListView):
   model = Product
@@ -18,6 +16,3 @@ class ProductDetailView(DetailView):
     context = super().get_context_data(**kwargs)
     context["related_products"] = Product.objects.order_by('-created_at')
     return context
-  
-def manage_product(request):
-  return render(request, 'products/manage_product.html')
