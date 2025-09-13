@@ -1,0 +1,49 @@
+{% extends 'management/products/manage_products_base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/product_custom.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-end mt-4 mb-3">
+    <a href="{% url 'management:manage_products_create' %}" class="btn btn-outline-primary me-2">
+    商品登録へ
+    </a>
+    <!-- <button type="button" class="btn btn-secondary me-2">ログアウト</button> -->
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;">商品管理コード</th>
+        <th style="white-space: nowrap;">商品名</th>
+        <th style="white-space: nowrap;">価格</th>
+        <th style="white-space: nowrap;">商品説明</th>
+        <th style="white-space: nowrap;">イメージ画像</th>
+        <th style="white-space: nowrap;">在庫</th>
+        <th style="white-space: nowrap;">登録日時</th>
+        <th style="white-space: nowrap;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <th scope="row">{{ product.sku }}</th>
+        <td style="white-space: nowrap;">{{ product.name }}</td>
+        <td style="white-space: nowrap; text-align: right;">{{ product.price }}円</td>
+        <td >{{ product.description|slice:":50" }}...</td>
+        <td><img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}のイメージ画像" style="width: 50px;" /></td>
+        <td style="white-space: nowrap; text-align: right;">{{ product.stock }}個</td>
+        <td style="white-space: nowrap;">{{ product.created_at }}</td>
+        <td style="white-space: nowrap;">
+        <a href="{% url 'management:manage_products_update' product.id %}" class="btn btn-outline-secondary">編集</a>
+        <a href="{% url 'management:manage_products_delete' product.id %}" class="btn btn-outline-danger">削除</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

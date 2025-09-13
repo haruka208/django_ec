@@ -1,0 +1,17 @@
+{% extends 'management/products/manage_products_base.html' %}
+
+{% block content %}
+<div class="container w-75 mt-5">
+  <div class="card p-4 shadow-sm">
+    <p>本当に<strong>「{{ object.name }}」</strong>を削除しますか？</p>
+    <div class="container d-flex">
+      <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">削除する</button>
+      </form>
+      <a href="{% url 'management:manage_products' %}" class="btn btn-secondary">キャンセル</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
