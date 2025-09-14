@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'products/products_base.html' %}
 {% load static %}
 
 {% block extra_css %}
@@ -10,7 +10,7 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="..." /></div>
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="{{ product.name }}のイメージ画像" /></div>
             <div class="col-md-6">
                 <div class="small mb-1">{{ product.sku }}</div>
                 <h1 class="display-5 fw-bolder">{{ product.name}}</h1>
@@ -39,7 +39,7 @@
                 <div class="card h-100">
                     <!-- Product image-->
                     <a href="{% url 'products:product_detail' product.id %}">
-                    <img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    <img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}のイメージ画像"/>
                     </a>
                     <!-- Product details-->
                     <div class="card-body p-4">
