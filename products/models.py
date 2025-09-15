@@ -13,4 +13,4 @@ class Product(models.Model):
   created_at = models.DateTimeField(verbose_name='登録日時', auto_now_add=True)
 
   def __str__(self):
-    return f"{self.name} / {self.price}円"
+    return f'{self.name} / {self.price}円'

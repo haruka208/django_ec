@@ -6,13 +6,13 @@ from .models import Product
 # Create your views here.
 class ProductListView(ListView):
   model = Product
-  template_name = "products/product_list.html"
+  template_name = 'products/product_list.html'
 
 class ProductDetailView(DetailView):
   model = Product
-  template_name = "products/product_detail.html"
+  template_name = 'products/product_detail.html'
 
   def get_context_data(self,**kwargs):
     context = super().get_context_data(**kwargs)
-    context["related_products"] = Product.objects.order_by('-created_at')
+    context['related_products'] = Product.objects.order_by('-created_at')
     return context
