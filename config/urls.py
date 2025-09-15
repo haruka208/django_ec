@@ -27,6 +27,7 @@ urlpatterns = [
     path('hello/', TemplateView.as_view(template_name='hello.html')),
     path('products/', include('products.urls')),
     path('manage/', include('management.urls')),
+    path('cart/', include('cart.urls')),
 ]
 
 if settings.DEBUG:

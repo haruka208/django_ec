@@ -1,6 +1,6 @@
 {% extends 'management/products/manage_products_base.html' %}
 
-{% load static %}
+{% load static humanize %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/product_custom.css' %}">
@@ -32,8 +32,8 @@
       <tr>
         <th scope="row">{{ product.sku }}</th>
         <td style="white-space: nowrap;">{{ product.name }}</td>
-        <td style="white-space: nowrap; text-align: right;">{{ product.price }}円</td>
-        <td >{{ product.description|slice:":50" }}...</td>
+        <td style="white-space: nowrap; text-align: right;">{{ product.price|intcomma }}円</td>
+        <td >{{ product.description|truncatechars:50 }}</td>
         <td><img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}のイメージ画像" style="width: 50px;" /></td>
         <td style="white-space: nowrap; text-align: right;">{{ product.stock }}個</td>
         <td style="white-space: nowrap;">{{ product.created_at }}</td>
