@@ -1,7 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Product
-# from django.http import HttpResponse
 
 # Create your views here.
 class ProductListView(ListView):

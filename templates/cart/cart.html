@@ -195,14 +195,7 @@
     </div>
     <div class="container">
       <main>
-        <div class="py-5 text-center">
-          <h1 class="h2">Checkout form</h1>
-          <p class="lead">
-            Below is an example form built entirely with Bootstrap’s form
-            controls. Each required form group has a validation state that can
-            be triggered by attempting to submit the form without completing it.
-          </p>
-        </div>
+        <br>
         <div class="row g-5">
           <div class="col-md-5 col-lg-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -242,94 +235,71 @@
             </form> -->
           </div>
           <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Billing address</h4>
+            <h4 class="mb-3">購入者情報</h4>
             <form class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-sm-6">
-                  <label for="firstName" class="form-label">First name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    placeholder=""
-                    value=""
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    Valid first name is required.
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="lastName" class="form-label">Last name</label>
+                  <label for="lastName" class="form-label">姓</label>
                   <input
                     type="text"
                     class="form-control"
                     id="lastName"
-                    placeholder=""
+                    placeholder="山田"
                     value=""
                     required
                   />
                   <div class="invalid-feedback">
-                    Valid last name is required.
+                    姓を入力してください
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">名</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    placeholder="花子"
+                    value=""
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    名を入力してください
                   </div>
                 </div>
                 <div class="col-12">
-                  <label for="username" class="form-label">Username</label>
+                  <label for="username" class="form-label">ユーザー名</label>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
                     <input
                       type="text"
                       class="form-control"
                       id="username"
-                      placeholder="Username"
+                      placeholder="例：hanako_123"
                       required
                     />
                     <div class="invalid-feedback">
-                      Your username is required.
+                      ユーザー名を入力してください
                     </div>
                   </div>
+                  <small class="text-body-secondary"
+                    >3〜20文字、半角英数字とアンダーバーが使えます</small
+                  >
                 </div>
                 <div class="col-12">
                   <label for="email" class="form-label"
-                    >Email
-                    <span class="text-body-secondary">(Optional)</span></label
+                    >メールアドレス</label
                   >
                   <input
                     type="email"
                     class="form-control"
                     id="email"
-                    placeholder="you@example.com"
+                    placeholder="example@example.com"
                   />
                   <div class="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
+                    メールアドレスを入力してください
                   </div>
                 </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">Address</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address"
-                    placeholder="1234 Main St"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    Please enter your shipping address.
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label for="address2" class="form-label"
-                    >Address 2
-                    <span class="text-body-secondary">(Optional)</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address2"
-                    placeholder="Apartment or suite"
-                  />
-                </div>
-                <div class="col-md-5">
+                <!-- <div class="col-md-5">
                   <label for="country" class="form-label">Country</label>
                   <select class="form-select" id="country" required>
                     <option value="">Choose...</option>
@@ -338,30 +308,55 @@
                   <div class="invalid-feedback">
                     Please select a valid country.
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <label for="state" class="form-label">State</label>
-                  <select class="form-select" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
+                </div> -->
                 <div class="col-md-3">
-                  <label for="zip" class="form-label">Zip</label>
+                  <label for="zip" class="form-label">郵便番号</label>
                   <input
                     type="text"
                     class="form-control"
                     id="zip"
-                    placeholder=""
+                    placeholder="例：123-4567"
                     required
                   />
-                  <div class="invalid-feedback">Zip code required.</div>
+                  <div class="invalid-feedback">郵便番号を入力してください</div>
+                </div>
+                <div class="col-md-4">
+                  <label for="prefecture" class="form-label">都道府県</label>
+                  <select class="form-select" id="prefecture" required>
+                    <option value="">選択してください</option>
+                    <option>California</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    都道府県を選択してください
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="address" class="form-label">市区町村・番地</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    placeholder="千代田区丸の内 1-1-1"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    住所を入力してください
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="address2" class="form-label"
+                    >建物名・部屋番号
+                    <span class="text-body-secondary">(任意)</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address2"
+                    placeholder="丸の内ビルディング 101号室"
+                  />
                 </div>
               </div>
-              <hr class="my-4" />
+              <!-- <hr class="my-4" />
               <div class="form-check">
                 <input
                   type="checkbox"
@@ -369,7 +364,7 @@
                   id="same-address"
                 />
                 <label class="form-check-label" for="same-address"
-                  >Shipping address is the same as my billing address</label
+                  >配送先住所は請求先と同じです</label
                 >
               </div>
               <div class="form-check">
@@ -379,12 +374,13 @@
                   id="save-info"
                 />
                 <label class="form-check-label" for="save-info"
-                  >Save this information for next time</label
+                  >次回のためにこの情報を保存する</label
                 >
               </div>
-              <hr class="my-4" />
-              <h4 class="mb-3">Payment</h4>
-              <div class="my-3">
+              <hr class="my-4" /> -->
+              <br>
+              <h4 class="mb-3">クレジットカード情報</h4>
+              <!-- <div class="my-3">
                 <div class="form-check">
                   <input
                     id="credit"
@@ -395,88 +391,69 @@
                     required
                   />
                   <label class="form-check-label" for="credit"
-                    >Credit card</label
+                    >クレジットカード</label
                   >
                 </div>
-                <div class="form-check">
-                  <input
-                    id="debit"
-                    name="paymentMethod"
-                    type="radio"
-                    class="form-check-input"
-                    required
-                  />
-                  <label class="form-check-label" for="debit">Debit card</label>
-                </div>
-                <div class="form-check">
-                  <input
-                    id="paypal"
-                    name="paymentMethod"
-                    type="radio"
-                    class="form-check-input"
-                    required
-                  />
-                  <label class="form-check-label" for="paypal">PayPal</label>
-                </div>
-              </div>
+              </div> -->
               <div class="row gy-3">
                 <div class="col-md-6">
-                  <label for="cc-name" class="form-label">Name on card</label>
+                  <label for="cc-name" class="form-label">カード名義</label>
                   <input
                     type="text"
                     class="form-control"
                     id="cc-name"
-                    placeholder=""
+                    placeholder="例：HANAKO YAMADA"
                     required
                   />
                   <small class="text-body-secondary"
-                    >Full name as displayed on card</small
+                    >カードに印字されているローマ字の氏名</small
                   >
-                  <div class="invalid-feedback">Name on card is required</div>
+                  <div class="invalid-feedback">カードに記載されている氏名を入力してください</div>
                 </div>
                 <div class="col-md-6">
                   <label for="cc-number" class="form-label"
-                    >Credit card number</label
+                    >クレジットカード番号</label
                   >
                   <input
                     type="text"
                     class="form-control"
                     id="cc-number"
-                    placeholder=""
+                    placeholder="例：0000 1111 2222 3333"
                     required
                   />
                   <div class="invalid-feedback">
-                    Credit card number is required
+                    クレジットカード番号を入力してください
                   </div>
                 </div>
                 <div class="col-md-3">
                   <label for="cc-expiration" class="form-label"
-                    >Expiration</label
+                    >有効期限(MM/YY)</label
                   >
                   <input
                     type="text"
                     class="form-control"
                     id="cc-expiration"
-                    placeholder=""
+                    placeholder="例：01/25"
                     required
                   />
-                  <div class="invalid-feedback">Expiration date required</div>
+                  <div class="invalid-feedback">有効期限を入力してください
+                  </div>
                 </div>
                 <div class="col-md-3">
-                  <label for="cc-cvv" class="form-label">CVV</label>
+                  <label for="cc-cvv" class="form-label" style="white-space: nowrap;">セキュリティコード</label>
                   <input
                     type="text"
                     class="form-control"
                     id="cc-cvv"
-                    placeholder=""
+                    placeholder="例：123"
                     required
                   />
-                  <div class="invalid-feedback">Security code required</div>
+                  <div class="invalid-feedback">セキュリティコードを入力してください</div>
                 </div>
               </div>
               <hr class="my-4" />
               <button class="w-100 btn btn-primary btn-lg" type="submit">
-                Continue to checkout
+                購入する
               </button>
             </form>
           </div>

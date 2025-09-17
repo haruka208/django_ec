@@ -1,7 +1,6 @@
 from django.views.generic.list import ListView
 from django.views import View
 from products.models import Product
-# from django.template.response import TemplateResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 
