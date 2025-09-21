@@ -217,7 +217,7 @@
                   <small class="text-body-secondary">{{ cart_item.product.price }}円 × {{ cart_item.quantity }}点</small>
                 </div>
                 <div class="d-flex" style="gap: 12px; white-space: nowrap;">
-                  <span class="text-body-secondary">{{ cart_item.total|intcomma}}円</span>
+                  <span class="text-body-secondary">{{ cart_item.subtotal_price|intcomma}}円</span>
                   <form action="{% url 'cart:cart_delete' cart_item.product.id %}" method="post">
                   {% csrf_token %}
                       <button type="submit" class="btn btn-danger mt-auto">削除</button>

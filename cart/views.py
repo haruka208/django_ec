@@ -1,71 +1,87 @@
 from django.views.generic.list import ListView
 from django.views import View
 from products.models import Product
-# from django.template.response import TemplateResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render
+
+from .models import Cart, CartItem
 
 # Create your views here.
 class CartListView(ListView):
-  def get(self, request):
-    cart = request.session.get('cart', {})
-    products = Product.objects.filter(pk__in=cart.keys())
+  model = CartItem
+  template_name = 'cart/cart.html'
 
-    cart_items = []
-    for p in products:
-      quantity = cart[str(p.pk)] # 数量
-      total = p.price * quantity # 小計
-      cart_items.append({
-        'product': p,
-        'quantity': quantity,
-        'total': total,
-      })
-    
+  # デフォルトでは 全部のレコードが対象なのでセッションが一致するカートに絞る
+  def get_queryset(self):
+    if not self.request.session.session_key: # セッションキーがなければ作る
+      self.request.session.create()
+  
+    cart, created = Cart.objects.get_or_create(session_key=self.request.session.session_key) # セッションキーが一致するカートを持ってくる、なければカートを作る
+    return cart.cartitem_set.select_related('product') # 関連するProductのデータも一緒にJOINしてカートの一覧を返す（N＋1回避）
+  
+  # テンプレートに渡す追加のコンテキストを追加する
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs) # 親クラスが用意した標準のコンテキストを取ってくる
+    cart, _ = Cart.objects.get_or_create(session_key=self.request.session.session_key)
+
     total_quantity = 0
-    for cart_item in cart_items:
-      total_quantity += cart_item['quantity']
+    for item in cart.cartitem_set.all():
+      total_quantity += item.quantity
 
     total_price = 0
-    for cart_item in cart_items:
-      total_price += cart_item['total']
-      
-    context = {
+    for item in cart.cartitem_set.all():
+      total_price += item.product.price * item.quantity
+
+    cart_items = []
+    for item in cart.cartitem_set.all():
+      subtotal_price = item.product.price * item.quantity
+      cart_items.append({
+        'product': item.product,
+        'quantity': item.quantity,
+        'subtotal_price': subtotal_price,
+      })
+
+    context.update({
       'cart_items': cart_items,
       'total_quantity': total_quantity,
       'total_price': total_price,
-    }
-      
-    return render(request, 'cart/cart.html', context)
+    })
+    return context
 
 class CartAddView(View):
+  # データを変更するのでpost()をオーバーライド
   def post(self, request, product_id):
-    product = get_object_or_404(Product, pk=product_id) # Product モデルから主キーに一致するレコードを探し、見つからなければ404 Not Found エラーを返す
-    cart = request.session.get('cart', {}) # セッションに cart があるか確認して、なければ空の辞書を返す
-    quantity_str = request.POST.get('quantity', 1)
+    if not self.request.session.session_key:
+      self.request.session.create()
 
+    cart, created = Cart.objects.get_or_create(session_key=self.request.session.session_key)
+
+    product = get_object_or_404(Product, pk=product_id) # Product モデルから主キーに一致するレコードを探し、見つからなければ404 Not Found エラーを返す
+
+    quantity_str = request.POST.get('quantity', 1)
     try:
       quantity = int(quantity_str)
     except ValueError:
       quantity = 1
 
-    product_id_str = str(product_id)
-
-    if product_id_str in cart:
-      cart[product_id_str] += quantity
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product) # すでにカートに入ってる商品ならそれを引き出してくる、新規なら新しく入れる
+    if created == False:
+      cart_item.quantity += quantity
     else:
-      cart[product_id_str] = quantity
+      cart_item.quantity = quantity
 
-    request.session['cart'] = cart # cartの変更をセッションに反映
+    cart_item.save()
+
     return redirect('cart:cart_list')
 
-class CartDeleteView(View): # データベースから削除するわけではないのでDeleteViewは使用しない
+class CartDeleteView(View): # DeleteViewは確認画面つき
   def post(self, request, product_id):
-    cart = request.session.get('cart', {})
-    product_id_str = str(product_id)
+    if not self.request.session.session_key:
+      self.request.session.create()
 
-    if product_id_str in cart:
-      del cart[product_id_str]
-      request.session['cart'] = cart
+    cart, _ = Cart.objects.get_or_create(session_key=self.request.session.session_key)
+    
+    cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
+    cart_item.delete()
 
     return redirect('cart:cart_list')
   
