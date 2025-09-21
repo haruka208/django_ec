@@ -12,5 +12,8 @@ class Product(models.Model):
   stock = models.PositiveIntegerField(verbose_name='在庫', null=True, blank=True)
   created_at = models.DateTimeField(verbose_name='登録日時', auto_now_add=True)
 
-  def __str__(self): # オブジェクトを文字列として表現するときにどう表示するか を決めるもの
+  def __str__(self):
     return f'{self.name} / {self.price}円'
+  
+  class Meta:
+    db_table = 'product'
