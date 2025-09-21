@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views import View
 from products.models import Product
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import F
 
 from .models import Cart, CartItem
 
@@ -24,15 +25,11 @@ class CartListView(ListView):
     cart, _ = Cart.objects.get_or_create(session_key=self.request.session.session_key)
 
     total_quantity = 0
-    for item in cart.cartitem_set.all():
-      total_quantity += item.quantity
-
     total_price = 0
-    for item in cart.cartitem_set.all():
-      total_price += item.product.price * item.quantity
-
     cart_items = []
     for item in cart.cartitem_set.all():
+      total_quantity += item.quantity
+      total_price += item.product.price * item.quantity
       subtotal_price = item.product.price * item.quantity
       cart_items.append({
         'product': item.product,
@@ -50,10 +47,10 @@ class CartListView(ListView):
 class CartAddView(View):
   # データを変更するのでpost()をオーバーライド
   def post(self, request, product_id):
-    if not self.request.session.session_key:
-      self.request.session.create()
+    if not request.session.session_key:
+      request.session.create()
 
-    cart, created = Cart.objects.get_or_create(session_key=self.request.session.session_key)
+    cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
 
     product = get_object_or_404(Product, pk=product_id) # Product モデルから主キーに一致するレコードを探し、見つからなければ404 Not Found エラーを返す
 
@@ -63,11 +60,16 @@ class CartAddView(View):
     except ValueError:
       quantity = 1
 
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product) # すでにカートに入ってる商品ならそれを引き出してくる、新規なら新しく入れる
-    if created == False:
-      cart_item.quantity += quantity
-    else:
-      cart_item.quantity = quantity
+    # すでにカートに入ってる商品ならそれを引き出してくる、新規なら新しく入れる
+    cart_item, created = CartItem.objects.get_or_create(
+      cart=cart,
+      product=product,
+      defaults={'quantity': quantity}
+      )
+    if not created:
+      CartItem.objects.filter(pk=cart_item.pk).update(
+        quantity=F('quantity') + quantity
+      )
 
     cart_item.save()
 
@@ -75,10 +77,10 @@ class CartAddView(View):
 
 class CartDeleteView(View): # DeleteViewは確認画面つき
   def post(self, request, product_id):
-    if not self.request.session.session_key:
-      self.request.session.create()
+    if not request.session.session_key:
+      request.session.create()
 
-    cart, _ = Cart.objects.get_or_create(session_key=self.request.session.session_key)
+    cart, _ = Cart.objects.get_or_create(session_key=request.session.session_key)
     
     cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
     cart_item.delete()
