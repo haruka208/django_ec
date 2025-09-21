@@ -19,3 +19,14 @@ class Order(models.Model):
   cc_number = models.CharField(verbose_name='クレジットカード番号', max_length=19, blank=False, null=False, validators=[RegexValidator(r'^\d{13,19}$', '13〜19桁の数字を入力してください')])
   cc_expiration = models.CharField(verbose_name='有効期限(MM/YY)', max_length=5, blank=False, null=False)
   cc_cvv = models.CharField(verbose_name='セキュリティコード', max_length=4, blank=False, null=False, validators=[RegexValidator(r'^\d{3,4}$', '3又は4桁の数字を入力してください')])
+
+  total_price = models.IntegerField()
+
+class OrderItem(models.Model):
+  order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
+  product_id = models.IntegerField()
+  product_name = models.CharField(max_length=255)
+  product_price = models.IntegerField()
+  quantity = models.IntegerField()
+  subtotal_price = models.IntegerField()
+  
