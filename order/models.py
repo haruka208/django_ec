@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from prefectures import PREFECTURES
 
 # Create your models here.
 
@@ -10,7 +11,7 @@ class Order(models.Model):
   email = models.EmailField(verbose_name='メールアドレス', blank=False, null=False)
 
   postal_code = models.CharField(verbose_name='郵便番号', max_length=10, blank=False, null=False)
-  prefecture = models.CharField(verbose_name='都道府県', max_length=50, blank=False, null=False)
+  prefecture = models.CharField(verbose_name='都道府県', max_length=10, blank=False, null=False)
   address_1 = models.CharField(verbose_name='市区町村・番地', max_length=255, blank=False, null=False)
   address_2 = models.CharField(verbose_name='建物名・部屋番号', max_length=255, blank=True, null=True)
 
