@@ -4,6 +4,7 @@ from prefectures import PREFECTURES
 
 from products.models import Product
 
+
 # Create your models here.
 
 class Order(models.Model):
@@ -55,4 +56,4 @@ class OrderItem(models.Model):
   subtotal_price = models.IntegerField(verbose_name='小計')
   def __str__(self):
     return f'注文商品 : {self.product_name} × {self.quantity}点(注文ID : {self.order.id})'
-  
+
