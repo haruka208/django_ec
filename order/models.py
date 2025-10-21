@@ -55,8 +55,3 @@ class OrderItem(models.Model):
   subtotal_price = models.IntegerField(verbose_name='小計')
   def __str__(self):
     return f'注文商品 : {self.product_name} × {self.quantity}点(注文ID : {self.order.id})'
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 93ecb5c (チェックアウト機能実装)

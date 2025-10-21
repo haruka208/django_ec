@@ -238,10 +238,6 @@
           </div>
           <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">購入者情報</h4>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
             <form action="{% url 'cart:checkout' %}" method="post" class="needs-validation" novalidate>
               {% csrf_token %}
 
@@ -252,7 +248,6 @@
                 </div>
               {% endfor %}
 
-<<<<<<< HEAD
               <div class="row g-3">
                 <div class="col-sm-6">
                   <label for="lastName" class="form-label">姓</label>
@@ -267,67 +262,15 @@
                   {% if form.first_name.errors %}
                   <div class="invalid-feedback d-block">{{ form.first_name.errors }}</div>
                   {% endif %}
-=======
-            <form class="needs-validation" novalidate>
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
-              <div class="row g-3">
-                <div class="col-sm-6">
-                  <label for="lastName" class="form-label">姓</label>
-                  {{ form.last_name }}
-                  {% if form.last_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.last_name.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-sm-6">
-                  <label for="firstName" class="form-label">名</label>
-<<<<<<< HEAD
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    placeholder="花子"
-                    value=""
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    名を入力してください
-                  </div>
->>>>>>> c4e532d (コンフリクト解消)
-=======
-                  {{ form.first_name }}
-                  {% if form.first_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.first_name.errors }}</div>
-                  {% endif %}
->>>>>>> 93ecb5c (チェックアウト機能実装)
                 </div>
                 <div class="col-12">
                   <label for="username" class="form-label">ユーザー名</label>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                     {{ form.user_name }}
                     {% if form.user_name.errors %}
                   <div class="invalid-feedback d-block">{{ form.user_name.errors }}</div>
                     {% endif %}
-<<<<<<< HEAD
-=======
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="username"
-                      placeholder="例：hanako_123"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      ユーザー名を入力してください
-                    </div>
->>>>>>> c4e532d (コンフリクト解消)
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                   </div>
                   <small class="text-body-secondary"
                     >3〜20文字、半角英数字とアンダーバーが使えます</small
@@ -337,15 +280,10 @@
                   <label for="email" class="form-label"
                     >メールアドレス</label
                   >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                   {{ form.email }}
                   {% if form.email.errors %}
                   <div class="invalid-feedback d-block">{{ form.email.errors }}</div>
                     {% endif %}
-<<<<<<< HEAD
                 </div>
                 <div class="col-md-3">
                   <label for="zip" class="form-label">郵便番号</label>
@@ -367,78 +305,16 @@
                   {% if form.address_1.errors %}
                   <div class="invalid-feedback d-block">{{ form.address_1.errors }}</div>
                   {% endif %}  
-=======
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="example@example.com"
-                  />
-                  <div class="invalid-feedback">
-                    メールアドレスを入力してください
-                  </div>
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
-                </div>
-                <div class="col-md-3">
-                  <label for="zip" class="form-label">郵便番号</label>
-                  {{ form.postal_code }}
-                  {% if form.postal_code.errors %}
-                  <div class="invalid-feedback d-block">{{ form.postal_code.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-md-4">
-                  <label for="prefecture" class="form-label">都道府県</label>
-<<<<<<< HEAD
-                  <select class="form-select" id="prefecture" required>
-                    <option value="">選択してください</option>
-                    <option>California</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    都道府県を選択してください
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">市区町村・番地</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address"
-                    placeholder="千代田区丸の内 1-1-1"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    住所を入力してください
-                  </div>
->>>>>>> c4e532d (コンフリクト解消)
-=======
-                  {{ form.prefecture }}
-                  {% if form.prefecture.errors %}
-                  <div class="invalid-feedback d-block">{{ form.prefecture.errors }}</div>
-                  {% endif %}                  
-                </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">市区町村・番地</label>
-                  {{ form.address_1 }}
-                  {% if form.address_1.errors %}
-                  <div class="invalid-feedback d-block">{{ form.address_1.errors }}</div>
-                  {% endif %}  
->>>>>>> 93ecb5c (チェックアウト機能実装)
                 </div>
                 <div class="col-12">
                   <label for="address2" class="form-label"
                     >建物名・部屋番号
                     <span class="text-body-secondary">(任意)</span></label
                   >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                   {{ form.address_2 }}
                   {% if form.address_2.errors %}
                   <div class="invalid-feedback d-block">{{ form.address_2.errors }}</div>
                   {% endif %}                  
-<<<<<<< HEAD
                 </div>
               </div>
               <br>
@@ -453,76 +329,24 @@
                   <small class="text-body-secondary"
                     >カードに印字されているローマ字の氏名</small
                   >
-=======
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address2"
-                    placeholder="丸の内ビルディング 101号室"
-                  />
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
-                </div>
-              </div>
-              <br>
-              <h4 class="mb-3">クレジットカード情報</h4>
-              <div class="row gy-3">
-                <div class="col-md-6">
-                  <label for="cc-name" class="form-label">カード名義</label>
-                  {{ form.cc_name }}
-                  {% if form.cc_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_name.errors }}</div>
-                  {% endif %}
-                  <small class="text-body-secondary"
-                    >カードに印字されているローマ字の氏名</small
-                  >
-<<<<<<< HEAD
-                  <div class="invalid-feedback">カードに記載されている氏名を入力してください</div>
->>>>>>> c4e532d (コンフリクト解消)
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                 </div>
                 <div class="col-md-6">
                   <label for="cc-number" class="form-label"
                     >クレジットカード番号</label
                   >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                   {{ form.cc_number }}
                   {% if form.cc_number.errors %}
                   <div class="invalid-feedback d-block">{{ form.cc_number.errors }}</div>
                   {% endif %}                  
-<<<<<<< HEAD
-=======
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cc-number"
-                    placeholder="例：0000 1111 2222 3333"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    クレジットカード番号を入力してください
-                  </div>
->>>>>>> c4e532d (コンフリクト解消)
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                 </div>
                 <div class="col-md-3">
                   <label for="cc-expiration" class="form-label"
                     >有効期限(MM/YY)</label
                   >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
                   {{ form.cc_expiration }}
                   {% if form.cc_expiration.errors %}
                   <div class="invalid-feedback d-block">{{ form.cc_expiration.errors }}</div>
                   {% endif %} 
-<<<<<<< HEAD
                 </div>
                 <div class="col-md-3">
                   <label for="cc-cvv" class="form-label" style="white-space: nowrap;">セキュリティコード</label>
@@ -534,36 +358,6 @@
               </div>
               <hr class="my-4" />
               <div class="d-flex justify-content-center"><button type="submit" class="w-100 btn btn-primary btn-lg">購入する</button></div>
-=======
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cc-expiration"
-                    placeholder="例：01/25"
-                    required
-                  />
-                  <div class="invalid-feedback">有効期限を入力してください
-                  </div>
-=======
->>>>>>> 93ecb5c (チェックアウト機能実装)
-                </div>
-                <div class="col-md-3">
-                  <label for="cc-cvv" class="form-label" style="white-space: nowrap;">セキュリティコード</label>
-                  {{ form.cc_cvv }}
-                  {% if form.cc_cvv.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_cvv.errors }}</div>
-                  {% endif %} 
-                </div>
-              </div>
-              <hr class="my-4" />
-<<<<<<< HEAD
-              <button class="w-100 btn btn-primary btn-lg" type="submit">
-                購入する
-              </button>
->>>>>>> c4e532d (コンフリクト解消)
-=======
-              <div class="d-flex justify-content-center"><button type="submit" class="w-100 btn btn-primary btn-lg">購入する</button></div>
->>>>>>> 93ecb5c (チェックアウト機能実装)
             </form>
           </div>
         </div>
