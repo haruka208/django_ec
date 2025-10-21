@@ -218,10 +218,10 @@ def send_order_email(order):
   # メール送信
   subject = '【django_ec】ご注文ありがとうございます'
   message = f'''
-  {order.last_name} {order.first_name} 
+  {order.last_name} {order.first_name} 様
   ご注文ありがとうございます
   注文番号: {order.id}
-  合計金額: {order.total_price}
+  合計金額: {order.total_price}円
   ご注文内容:
   '''
   
