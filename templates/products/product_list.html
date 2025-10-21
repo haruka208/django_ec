@@ -1,11 +1,27 @@
-{% extends 'products/product_base.html' %}
+{% extends 'base.html' %}
 {% load static humanize %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/product_custom.css' %}">
 {% endblock %}
 
+{% block header %}{% include 'header.html' %}{% endblock %}
+
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        {% elif message.tags == 'success' %}
+            <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        {% else %}
+            <div class='alert alert-secondary alert-dismissible fade show' role='alert'>
+        {% endif %}
+            {{ message }}
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>
+    {% endfor %}
+{% endif %}
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -28,12 +44,16 @@
                     </div>
                     <!-- Product actions-->                   
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                        {% csrf_token %}
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-outline-dark mt-auto">カートに追加する</button>
-                            </div>
-                        </form>
+                        <div class="text-center">
+                            {% if product.stock > 0 %}
+                                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-dark mt-auto">カートに追加する</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-secondary" disabled>在庫なし</button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,3 +62,5 @@
     </div>
 </section>
 {% endblock %}
+
+{% block footer %}{% include 'footer.html' %}{% endblock %}

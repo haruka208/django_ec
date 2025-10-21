@@ -8,6 +8,9 @@ class Cart(models.Model):
   created_at = models.DateTimeField(verbose_name='作成日',auto_now_add=True)
   updated_at = models.DateTimeField(verbose_name='更新日',auto_now=True)
 
+  def __str__(self):
+    return f'セッションキー : {self.session_key})'
+
   class Meta:
     db_table = 'cart'
 
@@ -17,7 +20,7 @@ class CartItem(models.Model):
   quantity = models.PositiveIntegerField(verbose_name='数量',default=1)
 
   def __str__(self):
-    return f'{self.product.name} × {self.quantity}個'
+    return f'{self.product.name} × {self.quantity}点'
 
   class Meta:
     db_table = 'cart_item'

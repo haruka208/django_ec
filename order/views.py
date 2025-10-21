@@ -1,22 +1,27 @@
-# from django.views.generic.edit import CreateView
-# from django.contrib import messages
-# from django.urls import reverse_lazy
-# from .models import Order
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from cart.models import Cart
+from order.models import Order, OrderItem
+from .forms import CheckoutForm
+
+from basicauth.decorators import basic_auth_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
-def checkout(request):
-  if request.method == 'POST':
-    
 
+# def cancel_order(request, order_id):
+#   order = get_object_or_404(Order, id=order_id)
+#   order.cancel()
 
-# class OrderCreateView(CreateView):
-#   model = Order
-#   fields = '__all__'
-#   template_name = 'cart/cart.html'
-#   success_url = reverse_lazy('order:order')
+@method_decorator(basic_auth_required, name='dispatch')
+class OrderListView(ListView):
+  model = Order
+  template_name = 'order/order_list.html'
 
-  # def form_valid(self, form):
-  #   response = super().form_valid(form)
-  #   self.request.session['cart'] = {}
-  #   messages.success(self.request, 'ご購入ありがとうございました！')
-  #   return response
+@method_decorator(basic_auth_required, name='dispatch')
+class OrderDetailView(DetailView):
+  model = Order
+  template_name = 'order/order_detail.html'

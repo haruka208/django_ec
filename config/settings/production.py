@@ -12,4 +12,3 @@ ALLOWED_HOSTS = ['.herokuapp.com']
 DATABASES = {
     'default': env.db(),
 }
-
