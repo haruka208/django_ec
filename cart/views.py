@@ -1,13 +1,13 @@
 from django.views.generic.list import ListView
 from django.views import View
 from products.models import Product
-from django.shortcuts import get_object_or_404, redirect, render
-from django.core.exceptions import ValidationError
-from django.urls import reverse
 
 from django.contrib import messages
 from order.forms import CheckoutForm
 from django.db.models import F
+from django.shortcuts import get_object_or_404, redirect, render
+from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 from .models import Cart, CartItem
 from order.models import OrderItem
