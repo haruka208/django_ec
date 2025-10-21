@@ -13,26 +13,26 @@ from .forms import ManageProductForm
 def manage_products(request):
   products = Product.objects.all()
   return render(request, 'management/products/manage_products.html',{
-    "products":products
+    'products':products
   })
 
-@method_decorator(basic_auth_required, name="dispatch")
+@method_decorator(basic_auth_required, name='dispatch')
 class ProductCreateView(CreateView):
   # model = Product # モデル用のフォームを自動で用意
   # fields = '__all__' # フォームに表示するフィールド
   form_class = ManageProductForm # フォームで明示的に指定
-  template_name = "management/products/manage_products_create.html" # 指定したテンプレートでフォームを表示
-  success_url = reverse_lazy("management:manage_products")
+  template_name = 'management/products/manage_products_create.html' # 指定したテンプレートでフォームを表示
+  success_url = reverse_lazy('management:manage_products')
 
-@method_decorator(basic_auth_required, name="dispatch")
+@method_decorator(basic_auth_required, name='dispatch')
 class ProductUpdateView(UpdateView):
   model = Product
   form_class = ManageProductForm
-  template_name = "management/products/manage_products_update.html"
-  success_url = reverse_lazy("management:manage_products")
+  template_name = 'management/products/manage_products_update.html'
+  success_url = reverse_lazy('management:manage_products')
 
-@method_decorator(basic_auth_required, name="dispatch")
+@method_decorator(basic_auth_required, name='dispatch')
 class ProductDeleteView(DeleteView):
   model = Product
-  template_name = "management/products/manage_products_delete.html"
-  success_url = reverse_lazy("management:manage_products")
+  template_name = 'management/products/manage_products_delete.html'
+  success_url = reverse_lazy('management:manage_products')
