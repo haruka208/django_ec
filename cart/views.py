@@ -128,7 +128,7 @@ def checkout(request):
     elif form.is_valid(): # バリデーションチェック
       with transaction.atomic(): # ここからトランザクション設定
         order = form.save(commit=False)
-        order.total_price = 0  # order を.save()して使うために仮で設定
+        # order.total_price = 0  # order を.save()して使うために仮で設定　→ モデルにデフォルト値を追加して削除
         order.save()
 
         total_price = 0

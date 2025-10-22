@@ -23,7 +23,7 @@ class Order(models.Model):
   cc_cvv = models.CharField(verbose_name='セキュリティコード', max_length=4, blank=False, null=False, validators=[RegexValidator(r'^\d{3,4}$', '3又は4桁の数字を入力してください')])
 
   created_at = models.DateTimeField(auto_now_add=True, verbose_name='注文日時', blank=False, null=False)
-  total_price = models.IntegerField(verbose_name='注文金額', blank=False, null=False)
+  total_price = models.IntegerField(verbose_name='注文金額', blank=False, null=False, default=0)
 
   # STATUS_CHOICES = [
   #   ('pending', '未確定'),
