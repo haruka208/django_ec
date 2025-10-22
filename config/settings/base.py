@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'management',
     'cart',
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,14 @@ CLOUDINARY_STORAGE = {
 BASICAUTH_USERS={'admin': 'pw'} # Basic認証用
 
 NUMBER_GROUPING = 3
+
+DEFAULT_FROM_EMAIL = 'no-reply@example.com'
+
+# SendGridによるメール送信設定
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
+DEFAULT_FROM_EMAIL = env('SENDGRID_FROM_EMAIL')

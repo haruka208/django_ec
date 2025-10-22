@@ -1,6 +1,5 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from products.models import Product
-# from django.http import HttpResponse
 
 from basicauth.decorators import basic_auth_required
 from django.utils.decorators import method_decorator

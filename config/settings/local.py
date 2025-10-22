@@ -16,3 +16,5 @@ DATABASES = {
 }
 
 INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic') #ローカル環境で本番と同じように WhiteNoise を使う設定
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # コンソールバックエンド

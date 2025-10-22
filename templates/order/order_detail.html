@@ -1,6 +1,6 @@
 {% load i18n static humanize %}
 
-{% include 'navigation.html' %}
+{% include 'navigation_nocart.html' %}
 
 <!doctype html>
 {% get_current_language as LANGUAGE_CODE %}
@@ -21,7 +21,7 @@
       href="https://getbootstrap.com/docs/5.3/examples/checkout/"
     />
     <script src="../assets/js/color-modes.js"></script>
-    <!-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
     <meta name="theme-color" content="#712cf9" />
     <link rel="stylesheet" href="{% static 'cart/css/checkout.css' %}">
     <style>
@@ -97,6 +97,51 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+
+      /* コンテナ全体の余白と背景 */
+      /* main {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      } */
+      
+      /* 見出しのデザイン */
+      /* h4 {
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+      } */
+      
+      /* list-group 共通の装飾 */
+      /* .list-group-item {
+        border: 1px solid #dee2e6;
+        padding: 10px 16px;
+        background-color: #fff;
+        font-size: 0.95rem;
+      } */
+      
+      /* 左右で分けたラベルと値の整列（ul構造） */
+      /* .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      } */
+      
+      /* テーブル形式の装飾 */
+      .table th {
+        width: 30%;
+        background-color: #f8f9fa;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      
+      /* 合計金額を目立たせる */
+      /* .list-group-item strong {
+        font-size: 1.1rem;
+        color: #000;
+      } */
     </style>
   </head>
   <body class="bg-body-tertiary">
@@ -201,27 +246,22 @@
         <div class="row g-5">
           <div class="col-md-5 col-lg-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-              <span class="text-primary">カート</span>
-              <span class="badge bg-primary rounded-pill">{{ total_quantity }}</span>
+              <span class="text-primary">購入商品</span>
             </h4>
             <ul class="list-group mb-3">
-              {% for cart_item in cart_items %}
+              {% for item in order.orderitem_set.all %}
               <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 class="my-0">{{ cart_item.product.name }}</h6>
-                  <small class="text-body-secondary">{{ cart_item.product.price }}円 × {{ cart_item.quantity }}点</small>
+                  <h6 class="my-0">{{ item.product_name }}</h6>
+                  <small class="text-body-secondary">{{ item.product_price }}円 × {{ item.quantity }}点</small>
                 </div>
                 <div class="d-flex" style="gap: 12px; white-space: nowrap;">
-                  <span class="text-body-secondary">{{ cart_item.subtotal_price|intcomma}}円</span>
-                  <form action="{% url 'cart:cart_delete' cart_item.product.id %}" method="post">
-                  {% csrf_token %}
-                      <button type="submit" class="btn btn-danger mt-auto">削除</button>
-                  </form>
+                  <span class="text-body-secondary">{{ item.subtotal_price|intcomma}}円</span>
                 </div>
               </li>
               {% endfor %}
               <li class="list-group-item d-flex justify-content-between">
-                <span>合計</span> <strong>{{ total_price|intcomma }}円</strong>
+                <span>合計</span> <strong>{{ order.total_price|intcomma }}円</strong>
               </li>
             </ul>
             <!-- プロモコード -->
@@ -236,140 +276,34 @@
               </div>
             </form> -->
           </div>
-          <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">購入者情報</h4>
-            <form action="{% url 'cart:checkout' %}" method="post" class="needs-validation" novalidate>
-              {% csrf_token %}
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">購入者情報</h4>
+          <table class="table table-bordered">
+            <tbody>
+              <tr><th>注文日時</th><td>{{ order.created_at }}</td></tr>
+              <tr><th>氏名</th><td>{{ order.last_name }} {{ order.first_name }}</td></tr>
+              <tr><th>ユーザー名</th><td>{{ order.user_name }}</td></tr>
+              <tr><th>メールアドレス</th><td>{{ order.email }}</td></tr>
+              <tr><th>郵便番号</th><td>{{ order.postal_code }}</td></tr>
+              <tr><th>住所</th><td>{{ order.get_prefecture_display }}{{ order.address_1 }}{{ order.address_2 }}</td></tr>
+              <tr><th>クレジットカード番号</th><td>{{ order.cc_number }}</td></tr>
+              <tr><th>有効期限(MM/YY)</th><td>{{ order.cc_expiration }}</td></tr>
+            </tbody>
+          </table>
 
-              <!-- 全体エラー -->
-              {% for non_field_error in form.non_field_errors %}
-                <div class="alert alert-danger">
-                  {{ non_field_error }}
-                </div>
-              {% endfor %}
-
-              <div class="row g-3">
-                <div class="col-sm-6">
-                  <label for="lastName" class="form-label">姓</label>
-                  {{ form.last_name }}
-                  {% if form.last_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.last_name.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-sm-6">
-                  <label for="firstName" class="form-label">名</label>
-                  {{ form.first_name }}
-                  {% if form.first_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.first_name.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-12">
-                  <label for="username" class="form-label">ユーザー名</label>
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">@</span>
-                    {{ form.user_name }}
-                    {% if form.user_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.user_name.errors }}</div>
-                    {% endif %}
-                  </div>
-                  <small class="text-body-secondary"
-                    >3〜20文字、半角英数字とアンダーバーが使えます</small
-                  >
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label"
-                    >メールアドレス</label
-                  >
-                  {{ form.email }}
-                  {% if form.email.errors %}
-                  <div class="invalid-feedback d-block">{{ form.email.errors }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-md-3">
-                  <label for="zip" class="form-label">郵便番号</label>
-                  {{ form.postal_code }}
-                  {% if form.postal_code.errors %}
-                  <div class="invalid-feedback d-block">{{ form.postal_code.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-md-4">
-                  <label for="prefecture" class="form-label">都道府県</label>
-                  {{ form.prefecture }}
-                  {% if form.prefecture.errors %}
-                  <div class="invalid-feedback d-block">{{ form.prefecture.errors }}</div>
-                  {% endif %}                  
-                </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">市区町村・番地</label>
-                  {{ form.address_1 }}
-                  {% if form.address_1.errors %}
-                  <div class="invalid-feedback d-block">{{ form.address_1.errors }}</div>
-                  {% endif %}  
-                </div>
-                <div class="col-12">
-                  <label for="address2" class="form-label"
-                    >建物名・部屋番号
-                    <span class="text-body-secondary">(任意)</span></label
-                  >
-                  {{ form.address_2 }}
-                  {% if form.address_2.errors %}
-                  <div class="invalid-feedback d-block">{{ form.address_2.errors }}</div>
-                  {% endif %}                  
-                </div>
-              </div>
-              <br>
-              <h4 class="mb-3">クレジットカード情報</h4>
-              <div class="row gy-3">
-                <div class="col-md-6">
-                  <label for="cc-name" class="form-label">カード名義</label>
-                  {{ form.cc_name }}
-                  {% if form.cc_name.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_name.errors }}</div>
-                  {% endif %}
-                  <small class="text-body-secondary"
-                    >カードに印字されているローマ字の氏名</small
-                  >
-                </div>
-                <div class="col-md-6">
-                  <label for="cc-number" class="form-label"
-                    >クレジットカード番号</label
-                  >
-                  {{ form.cc_number }}
-                  {% if form.cc_number.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_number.errors }}</div>
-                  {% endif %}                  
-                </div>
-                <div class="col-md-3">
-                  <label for="cc-expiration" class="form-label"
-                    >有効期限(MM/YY)</label
-                  >
-                  {{ form.cc_expiration }}
-                  {% if form.cc_expiration.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_expiration.errors }}</div>
-                  {% endif %} 
-                </div>
-                <div class="col-md-3">
-                  <label for="cc-cvv" class="form-label" style="white-space: nowrap;">セキュリティコード</label>
-                  {{ form.cc_cvv }}
-                  {% if form.cc_cvv.errors %}
-                  <div class="invalid-feedback d-block">{{ form.cc_cvv.errors }}</div>
-                  {% endif %} 
-                </div>
-              </div>
-              <hr class="my-4" />
-              <div class="d-flex justify-content-center"><button type="submit" class="w-100 btn btn-primary btn-lg">購入する</button></div>
-            </form>
-          </div>
+          <!-- <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between">注文日時：{{ order.created_at }}</li>
+            <li class="list-group-item d-flex justify-content-between">氏名：{{ order.last_name }} {{ order.first_name }}</li>
+            <li class="list-group-item d-flex justify-content-between">ユーザー名：{{ order.user_name }}</li>
+            <li class="list-group-item d-flex justify-content-between">メールアドレス：{{ order.email }}</li>
+            <li class="list-group-item d-flex justify-content-between">郵便番号：{{ order.postal_code }}</li>
+            <li class="list-group-item d-flex justify-content-between">住所：{{ order.get_prefecture_display }}{{ order.address_1 }}{{ order.address_2 }}</li>
+            <li class="list-group-item d-flex justify-content-between">カード名義：{{ order.cc_name }}</li>
+            <li class="list-group-item d-flex justify-content-between">クレジットカード番号：{{ order.cc_number }}</li>
+            <li class="list-group-item d-flex justify-content-between">有効期限(MM/YY)：{{ order.cc_expiration }}</li>
+          </ul> -->
         </div>
       </main>
-      <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-        <p class="mb-1">&copy; 2017–2025 Company Name</p>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-      </footer>
     </div>
     <script
       src="../assets/dist/js/bootstrap.bundle.min.js"

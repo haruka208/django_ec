@@ -1,10 +1,13 @@
-{% extends 'management/products/manage_products_base.html' %}
+{% extends 'base.html' %}
 
 {% load static humanize %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/product_custom.css' %}">
 {% endblock %}
+
+{% block title %}管理画面{% endblock %}
+{% block navigation %}{% include 'navigation_nocart.html' %}{% endblock %}
 
 {% block content %}
 <div class="container">
