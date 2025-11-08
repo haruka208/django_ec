@@ -25,6 +25,9 @@ class Order(models.Model):
   created_at = models.DateTimeField(auto_now_add=True, verbose_name='注文日時', blank=False, null=False)
   total_price = models.IntegerField(verbose_name='注文金額', blank=False, null=False, default=0)
 
+  promo_code = models.CharField(verbose_name='プロモーションコード', max_length=7, blank=True, null=True)
+  discount = models.IntegerField(verbose_name='割引', null=True, blank=True)
+
   # STATUS_CHOICES = [
   #   ('pending', '未確定'),
   #   ('paid', '支払い済み'),
@@ -53,5 +56,6 @@ class OrderItem(models.Model):
   product_price = models.IntegerField(verbose_name='価格')
   quantity = models.IntegerField(verbose_name='数量')
   subtotal_price = models.IntegerField(verbose_name='小計')
+
   def __str__(self):
     return f'注文商品 : {self.product_name} × {self.quantity}点(注文ID : {self.order.id})'

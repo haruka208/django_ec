@@ -1,0 +1,14 @@
+.bath-header, .bath-footer {
+  background-image: url("../images/bath04.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bath-header {
+  height: 300px;
+}
+
+.bath-footer {
+  height: 130px;
+}
