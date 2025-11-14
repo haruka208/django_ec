@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 {% extends 'base.html' %}
-=======
-{% extends 'products/product_base.html' %}
->>>>>>> origin/main
 {% load static humanize %}
 
 {% block extra_css %}
@@ -48,7 +44,6 @@
                     </div>
                     <!-- Product actions-->                   
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-<<<<<<< HEAD
                         <div class="text-center">
                             {% if product.stock > 0 %}
                                 <form action="{% url 'cart:cart_add' product.id %}" method="post">
@@ -59,14 +54,6 @@
                                 <button class="btn btn-secondary" disabled>在庫なし</button>
                             {% endif %}
                         </div>
-=======
-                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                        {% csrf_token %}
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-outline-dark mt-auto">カートに追加する</button>
-                            </div>
-                        </form>
->>>>>>> origin/main
                     </div>
                 </div>
             </div>

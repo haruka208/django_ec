@@ -2,6 +2,21 @@
 
 {% include 'navigation.html' %}
 
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        {% elif message.tags == 'success' %}
+            <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        {% else %}
+            <div class='alert alert-secondary alert-dismissible fade show' role='alert'>
+        {% endif %}
+            {{ message }}
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>
+    {% endfor %}
+{% endif %}
+
 <!doctype html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
@@ -96,6 +111,11 @@
       }
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
+      }
+      input[name="promotion_code"] {
+        background-color: #fff9e6; /* 少し黄色がかった白 */
+        color: #5c4b00;           /* 落ち着いたブラウン系文字 */
+        border: 1px solid #e0c97f;
       }
     </style>
   </head>
@@ -206,39 +226,57 @@
             </h4>
             <ul class="list-group mb-3">
               {% for cart_item in cart_items %}
-              <li class="list-group-item d-flex justify-content-between lh-sm">
+              <li class="list-group-item d-flex justify-content-between align-items-center lh-sm">
                 <div>
                   <h6 class="my-0">{{ cart_item.product.name }}</h6>
                   <small class="text-body-secondary">{{ cart_item.product.price }}円 × {{ cart_item.quantity }}点</small>
                 </div>
-                <div class="d-flex" style="gap: 12px; white-space: nowrap;">
+                <div class="d-flex align-items-center" style="gap: 8px; white-space: nowrap;">
                   <span class="text-body-secondary">{{ cart_item.subtotal_price|intcomma}}円</span>
-                  <form action="{% url 'cart:cart_delete' cart_item.product.id %}" method="post">
+                  <form action="{% url 'cart:cart_delete' cart_item.product.id %}" method="post" style="margin: 0;">
                   {% csrf_token %}
-                      <button type="submit" class="btn btn-danger mt-auto">削除</button>
+                      <button type="submit" class="btn btn-danger btn-sm">削除</button>
                   </form>
                 </div>
               </li>
               {% endfor %}
+              {% if applied_promo_code %}
+              <li class="list-group-item d-flex justify-content-between align-items-center lh-sm text-success">
+                <div>
+                  <h6 class="my-0">プロモーションコード割引</h6>
+                  <small class="text-body-secondary">{{ applied_promo_code }}</small>
+                </div>
+              
+                <div class="d-flex align-items-center" style="gap: 8px; white-space: nowrap;">
+                  <span class="text-body-secondary">-{{ applied_discount }}円</span>
+                  <form action="{% url 'cart:remove_promo' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                  </form>
+                </div>
+              </li>
+
+              {% endif %}
               <li class="list-group-item d-flex justify-content-between">
-                <span>合計</span> <strong>{{ total_price|intcomma }}円</strong>
+                <span>合計</span> <strong>{{ final_total|intcomma }}円</strong>
               </li>
             </ul>
-            <!-- プロモコード -->
-            <!-- <form class="card p-2">
+            <!-- プロモコードボタン🎟️ -->
+            <form method="get" action="{% url 'cart:apply_promo' %}" class="card p-2">
               <div class="input-group">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Promo code"
+                  name="promotion_code"
+                  placeholder="プロモーションコード"
                 />
-                <button type="submit" class="btn btn-secondary">Redeem</button>
+                <button type="submit" class="btn btn-secondary">適用する</button>
               </div>
-            </form> -->
+            </form>
           </div>
           <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">購入者情報</h4>
-            <form action="{% url 'cart:checkout' %}" method="post" class="needs-validation" novalidate>
+            <form action="{% url 'cart:checkout' %}" method="post" class="needs-validation">
               {% csrf_token %}
 
               <!-- 全体エラー -->
@@ -371,10 +409,13 @@
         </ul>
       </footer>
     </div>
-    <script
+    <!-- <script
       src="../assets/dist/js/bootstrap.bundle.min.js"
       class="astro-vvvwv3sm"
-    ></script>
+    ></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="checkout.js" class="astro-vvvwv3sm"></script>
   </body>
 </html>

@@ -255,11 +255,25 @@
                   <h6 class="my-0">{{ item.product_name }}</h6>
                   <small class="text-body-secondary">{{ item.product_price }}円 × {{ item.quantity }}点</small>
                 </div>
-                <div class="d-flex" style="gap: 12px; white-space: nowrap;">
+                <div class="d-flex" style="gap: 8px; white-space: nowrap;">
                   <span class="text-body-secondary">{{ item.subtotal_price|intcomma}}円</span>
                 </div>
               </li>
               {% endfor %}
+              
+              {% if order.promo_code %}
+              <li class="list-group-item d-flex justify-content-between lh-sm text-success">
+                <div>
+                  <h6 class="my-0">プロモーションコード割引</h6>
+                  <small class="text-body-secondary">{{ order.promo_code }}</small>
+                </div>
+              
+                <div class="d-flex" style="gap: 8px; white-space: nowrap;">
+                  <span class="text-body-secondary">-{{ order.discount }}円</span>
+                </div>
+              </li>
+              {% endif %}
+
               <li class="list-group-item d-flex justify-content-between">
                 <span>合計</span> <strong>{{ order.total_price|intcomma }}円</strong>
               </li>
@@ -280,13 +294,15 @@
           <h4 class="mb-3">購入者情報</h4>
           <table class="table table-bordered">
             <tbody>
+              <tr><th>注文番号</th><td>{{ order.id }}</td></tr>
               <tr><th>注文日時</th><td>{{ order.created_at }}</td></tr>
               <tr><th>氏名</th><td>{{ order.last_name }} {{ order.first_name }}</td></tr>
               <tr><th>ユーザー名</th><td>{{ order.user_name }}</td></tr>
               <tr><th>メールアドレス</th><td>{{ order.email }}</td></tr>
               <tr><th>郵便番号</th><td>{{ order.postal_code }}</td></tr>
-              <tr><th>住所</th><td>{{ order.get_prefecture_display }}{{ order.address_1 }}{{ order.address_2 }}</td></tr>
-              <tr><th>クレジットカード番号</th><td>{{ order.cc_number }}</td></tr>
+              <tr><th>住所</th><td>{{ order.get_prefecture_display }}{{ order.address_1 }} {{ order.address_2 }}</td></tr>
+              <tr><th>カード名義</th><td>{{ order.last_name|upper }} {{ order.first_name|upper }}</td></tr>
+              <tr><th>クレジットカード番号</th><td>**** **** **** {{order.cc_number|slice:"-4:"}}</td></tr>
               <tr><th>有効期限(MM/YY)</th><td>{{ order.cc_expiration }}</td></tr>
             </tbody>
           </table>
@@ -305,10 +321,13 @@
         </div>
       </main>
     </div>
-    <script
+    <!-- <script
       src="../assets/dist/js/bootstrap.bundle.min.js"
       class="astro-vvvwv3sm"
-    ></script>
+    ></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
     <script src="checkout.js" class="astro-vvvwv3sm"></script>
   </body>
 </html>
